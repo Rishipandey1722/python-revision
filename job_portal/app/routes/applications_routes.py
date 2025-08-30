@@ -1,5 +1,7 @@
 from models import Applicant
 from fastapi import FastAPI , APIRouter , Query , File , UploadFile , Form
+import json
+from  routes.job_routes import jobs
 
 router = APIRouter(
     prefix = "/application"
@@ -36,10 +38,13 @@ def test():
 
 
 @router.post("/{id}") # not working
-def apply_job(id: int,applicant : Applicant = Form(...) ,  file : UploadFile = File(...)):
-    print(file)
-    return "done"
+async def apply_job(id: int,applicant : str = Form(...) ,  file : UploadFile = File(...)):
+    return {"message" : "Successfully applied ..." , "filename" : file.filename}
 
 @router.get("/{id}")
 def read_application(id : int):
-    pass
+    result = []
+    for i in jobs:
+        if i["id"].equals(id):
+            return i
+    return "Not found"
