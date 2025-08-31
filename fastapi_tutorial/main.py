@@ -3,10 +3,12 @@ from pydantic import BaseModel
 from typing import Optional
 from fastapi import status
 from fastapi.responses import HTMLResponse , PlainTextResponse , FileResponse , JSONResponse
-from exercises import exercise9
+from exercises import exercise9 , exercise10
 
 app = FastAPI()
 app.include_router(exercise9.router)
+app.include_router(exercise10.router)
+
 
 #get request
 @app.get("/")
